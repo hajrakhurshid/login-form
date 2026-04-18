@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Auth UI Complete</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* RESET (FIXED) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* BODY */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-101399.jpg") no-repeat center/cover;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+/* WRAPPER (FLEX CONTAINER) */
+.wrapper {
+    width: 800px;
+    height: 500px;
+    background: white;
+    border-radius: 20px;
+    display: flex; /* FLEXBOX */
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+/* LEFT (FLEX ITEM) */
+.left {
+    flex: 1;
+    background: linear-gradient(135deg, #90d0e9, #89bad9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+}
+
+/* RIGHT (FLEX ITEM) */
+.right {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* ERROR */
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+/* BUTTON */
+button.submit {
+    background: #2575fc;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+}
+
+/* LEFT BUTTON */
+.left button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #2575fc;
+    cursor: pointer;
+}
+
+/* SOCIAL */
+.social {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.social-icons i {
+    font-size: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
+/* FORGOT */
+.forgot {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #2575fc;
+}
+
+/* LOGIN MODE ANIMATION */
+.wrapper.login-mode .left {
+    transform: translateX(100%);
+}
+
+.wrapper.login-mode .right {
+    transform: translateX(-100%);
+}
+
+/* FORM SWITCH */
+#loginForm {
+    display: none;
+}
+
+.wrapper.login-mode #registerForm {
+    display: none;
+}
+
+.wrapper.login-mode #loginForm {
+    display: block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrapper" id="wrapper">
+
+    <!-- LEFT -->
+    <div class="left">
+        <h1>Welcome!</h1>
+        <p id="leftText">Already have an account?</p>
+        <button onclick="toggleMode()">Login</button>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+        <!-- REGISTER -->
+        <div id="registerForm">
+            <h2 style="text-align:center;">Registration</h2>
+
+            <input type="text" id="name" placeholder="Name">
+            <div class="error" id="nameError"></div>
+
+            <input type="email" id="email" placeholder="Email">
+            <div class="error" id="emailError"></div>
+
+            <input type="password" id="password" placeholder="Password">
+            <div class="error" id="passwordError"></div>
+
+            <button class="submit" onclick="validateForm()">Submit</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="loginForm">
+            <h2 style="text-align:center;">Login</h2>
+
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+
+            <div class="forgot">Forgot Password?</div>
+
+            <button class="submit">Login</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function toggleMode() {
+    const wrapper = document.getElementById("wrapper");
+    const text = document.getElementById("leftText");
+    const btn = document.querySelector(".left button");
+
+    wrapper.classList.toggle("login-mode");
+
+    if (wrapper.classList.contains("login-mode")) {
+        text.innerText = "Don't have an account?";
+        btn.innerText = "Register";
+    } else {
+        text.innerText = "Already have an account?";
+        btn.innerText = "Login";
+    }
+}
+
+function validateForm() {
+    let valid = true;
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("emailError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+
+    if (name === "") {
+        document.getElementById("nameError").innerText = "Name required";
+        valid = false;
+    }
+
+    if (!email.includes("@")) {
+        document.getElementById("emailError").innerText = "Invalid email";
+        valid = false;
+    }
+
+    if (password.length < 8) {
+        document.getElementById("passwordError").innerText = "Min 8 characters";
+        valid = false;
+    }
+
+    if (valid) alert("Success!");
+}
+
+</script>
+
+</body>
+</html>
